@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  embedding_generator:
+    container_name: embedding-generator
+    build:
+      context: "./"
+      dockerfile: ./docker/dockerfile
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - ./src:/home/work/src
+      - ./tests:/home/work/tests
+      - ./app.py:/home/work/app.py
+      - ./requirements.test.txt:/home/work/requirements.test.txt
+      - ./docker/wait-for-it.sh:/home/work/wait-for-it.sh
