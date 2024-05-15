@@ -37,11 +37,15 @@ response
 1. Docker
 
 ## Setup
+0. Install dependencies
+```
+pip install -r requirements.txt
+```
 1. Download Model
 ```
 make init_model
 ```
-2.Compose up the containers
+2. Compose up the containers
 ```
 docker compose up --force-recreate --build
 ```
