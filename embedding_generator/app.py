@@ -15,5 +15,5 @@ async def root():
 
 
 @app.post("/generate")
-async def process_strings(texts: List[str]) -> Dict[str, List[float]]:
+async def generate_embedding(texts: List[str]) -> Dict[str, List[float]]:
     return engine.get_embedding_from_sentence(texts=texts)
