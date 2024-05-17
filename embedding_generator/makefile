@@ -5,5 +5,6 @@ test:
 	docker compose down -v
 
 init_model:
+	python -m pip install -r requirements.txt
 	python utils/download_model.py
 	
