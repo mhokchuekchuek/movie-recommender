@@ -47,7 +47,7 @@ when `returnMetadata=False`
 {'items': [{'movie_id': '1'}, {'movie_id': '2'}]}
 ```
 ### `/features`
-when request come in `Core API`, `Core API` will send request to `recommendation-API` to process this task
+when request come in `Core API`, `Core API` will connect to elasticsearch for process this task
 
 Input: 
 - `user_id:str`
