@@ -117,6 +117,7 @@ docker compose up --force-recreate --build
 cd api
 uvicorn app:app --port 1111 --reload
 ```
+4. see more [example](https://github.com/mhokchuekchuek/movie-recommender/tree/main/example/create_index_and_call_api)
 ## Why these architecture
 ![alt text](asset/recommend_arch.png "Title")
 - it easy to add or remove any components
