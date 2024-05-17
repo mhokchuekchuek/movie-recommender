@@ -1,0 +1,59 @@
+version: "3.9"
+services:
+  embedding_generator:
+    container_name: embedding-generator
+    build:
+      context: "./embedding_generator"
+      dockerfile: ./docker/dockerfile
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - ./embedding_generator/src:/home/work/src
+      - ./embedding_generator/tests:/home/work/tests
+      - ./embedding_generator/app.py:/home/work/app.py
+      - ./embedding_generator/requirements.test.txt:/home/work/requirements.test.txt
+      - ./embedding_generator/docker/wait-for-it.sh:/home/work/wait-for-it.sh
+
+  recommender:
+    container_name: recommender
+    build:
+      context: "./recommender"
+      dockerfile: ./docker/dockerfile
+    restart: unless-stopped
+    ports:
+      - 8001:8001
+    volumes:
+      - ./recommender/src:/home/work/src
+      - ./recommender/tests:/home/work/tests
+      - ./recommender/app.py:/home/work/app.py
+      - ./recommender/requirements.test.txt:/home/work/requirements.test.txt
+      - ./recommender/docker/wait-for-it.sh:/home/work/wait-for-it.sh
+
+
+  elasticsearch:
+    container_name: es-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - app-network
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms2g -Xmx2g
+      - transport.host=0.0.0.0
+      - http.cors.enabled=true
+      - http.cors.allow-origin=http://localhost
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    restart: on-failure
+    mem_limit: 2.5g
+
+volumes:
+  esdata:
+
+networks:
+  app-network:
+    driver: bridge
